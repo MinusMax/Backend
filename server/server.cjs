@@ -6,12 +6,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Use the Railway PostgreSQL connection string
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'vnpschool',
-    password: 'mixky21365',
-    port: 5432,
+    connectionString: "postgresql://postgres:OeYvGnLhrZaHjsXWlSVYOtoAlckOyDdg@tramway.proxy.rlwy.net:57348/railway",
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 app.post('/apply', async (req, res) => {
@@ -38,7 +38,7 @@ app.post('/apply', async (req, res) => {
 
         res.status(201).json({ message: 'Student apply successfully!' });
     } catch (error) {
-        console.error('Error apply user:', error);
+        console.error('Error applying user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -62,7 +62,7 @@ app.get('/search', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 8080;  // Make sure this matches Railway's port
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
