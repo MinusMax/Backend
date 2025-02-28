@@ -2,7 +2,8 @@
   "name": "server",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.cjs"
+    "start": "node server.cjs",
+    "postinstall": "npm install"
   },
   "dependencies": {
     "express": "^4.17.1",
