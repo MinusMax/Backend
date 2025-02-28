@@ -1,11 +1,11 @@
 {
-    "name": "server",
-    "version": "1.0.0",
-    "scripts": {
-      "start": "node server.cjs"
-    },
-    "dependencies": {
-      "express": "^4.17.1"
-    }
+  "name": "server",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.cjs"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "cors": "^2.8.5"
   }
-  
+}
