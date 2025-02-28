@@ -6,9 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Use the Railway PostgreSQL connection string
+// Use the environment variable DATABASE_URL for the connection string
 const pool = new Pool({
-    connectionString: "postgresql://postgres:OeYvGnLhrZaHjsXWlSVYOtoAlckOyDdg@tramway.proxy.rlwy.net:57348/railway",
+    connectionString: process.env.DATABASE_URL,  // Using the environment variable for security
     ssl: {
         rejectUnauthorized: false,
     },
@@ -21,9 +21,10 @@ app.post('/apply', async (req, res) => {
     }
     
     try {
-        const insertQuery =
-            `INSERT INTO students (first_name, last_name, grade, address)
-            VALUES ($1, $2, $3 , $4)`;
+        const insertQuery = `
+            INSERT INTO students (first_name, last_name, grade, address)
+            VALUES ($1, $2, $3 , $4)
+        `;
 
         const values = [
             first_name,
@@ -34,9 +35,9 @@ app.post('/apply', async (req, res) => {
 
         const result = await pool.query(insertQuery, values);
 
-        console.log('Student apply:', result.rows[0]);
+        console.log('Student applied:', result.rows[0]);
 
-        res.status(201).json({ message: 'Student apply successfully!' });
+        res.status(201).json({ message: 'Student applied successfully!' });
     } catch (error) {
         console.error('Error applying user:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -62,7 +63,7 @@ app.get('/search', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 8080;  // Make sure this matches Railway's port
+const PORT = process.env.PORT || 8080;  
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
